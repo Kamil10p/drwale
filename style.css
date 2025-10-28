@@ -1,0 +1,573 @@
+/* === Ustawienia Globalne === */
+:root {
+    --primary-color: #C7AF4F; /* Elegancki, ciemniejszy, piaskowy żółty/złoty - Akcent */
+    --secondary-color: #333333; /* Czysta Czerń - do hoverów i mocnego kontrastu */
+    --dark-color: #333333; /* Ciemny szary/Grafitowy - Tło Nav, Stopka, główne przyciski */
+    --light-color: #FFFFFF; /* Biel */
+    --text-color: #4A4A4A; /* Ciemniejszy szary dla głównego tekstu */
+    --bg-light-gray: #F0F0F0; /* Jasny szary - na tła sekcji */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+h1, h2 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: var(--dark-color);
+    margin-bottom: 2.5rem;
+}
+
+section {
+    padding: 4rem 0;
+}
+
+/* === Nawigacja === */
+.navbar {
+    background: var(--dark-color);
+    color: var(--light-color);
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 3px solid var(--primary-color);
+    height: 70px; 
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+/* === EFEKT LOGO: KOSZENIE PIŁĄ Z OBROTEM === */
+@keyframes cutting-swoop {
+    0%, 25%, 100% {
+        /* Stan spoczynku: normalna pozycja i rozmiar */
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+    }
+    30% {
+        /* Start ruchu: lekkie cofnięcie i aktywacja złotego cienia */
+        transform: translate(-5px, 0) scale(1.01) rotate(-15deg); /* Lekki obrót w lewo */
+        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+    }
+    40% {
+        /* Wierzchołek cięcia: najazd, mocne powiększenie i obrót */
+        transform: translate(10px, 0) scale(1.01) rotate(15deg); /* Przesunięcie w prawo i obrót w prawo */
+        filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
+    }
+    45% {
+        /* Szybki powrót do spoczynku */
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+    }
+}
+
+.navbar .logo {
+    /* KOMPLETNY STYL DLA LOGA TEKSTOWEGO */
+    font-size: 1.8rem;
+    font-weight: 900; /* Użycie najgrubszej wagi Montserrat */
+    font-family: 'Montserrat', sans-serif;
+    color: var(--light-color);
+    text-decoration: none;
+    
+    /* POPRAWA CZYTELNOŚCI: Subtelne rozrzedzenie, jeśli używasz tekstu */
+    letter-spacing: 1.5px; 
+
+    /* Styl dla logotypu (gdy jest to IMG) */
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar .logo img {
+    /* KLUCZOWA ZMIANA: Wymuszamy, by logo miało 50px wysokości, reszta się skaluje proporcjonalnie */
+    height: 50px; 
+    width: auto;
+    display: block;
+    margin-right: 5px;
+
+/* AKTYWACJA EFEKTU KOSZENIA */
+animation: cutting-swoop 12s infinite ease-in-out; /* Długi cykl (12s), aby nie męczyć oka */
+    
+/* Ustawienia początkowe (zgodne ze stanem 0% animacji) */
+filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.6));
+transition: none; /* Upewniamy się, że nie ma konfliktów */
+}
+
+.navbar .logo:hover {
+    filter: drop-shadow(0 0 10px var(--primary-color)); 
+    animation-play-state: paused; /* Możesz tymczasowo wstrzymać animację na hover */
+}
+
+.navbar nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.navbar nav li {
+    margin-left: 20px;
+}
+
+/* Nowoczesny hover dla widoku pełnoekranowego */
+.navbar nav a {
+    color: var(--light-color);
+    text-decoration: none;
+    
+    /* KLUCZOWA ZMIANA: Zastosowanie czcionki z logo */
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 700; /* MOCNA WAGA */
+    
+    padding: 0.5rem 0.8rem;
+    position: relative; 
+    transition: color 0.3s ease; 
+}
+
+.navbar nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Animowana linia podkreślająca */
+.navbar nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-out;
+}
+
+.navbar nav a:hover::after {
+    width: 100%;
+}
+
+
+/* Przycisk "Hamburger" dla mobilki */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--light-color);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* === Sekcja Hero === */
+#hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('hero_bg.png') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--light-color);
+    padding-top: 70px;
+    /* DODATKOWA POPRAWKA MOBILNA (z poprzedniej konwersacji) */
+    padding-left: 20px; 
+    padding-right: 20px; 
+}
+
+#hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+#hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+
+/* Kontener dla przycisków CTA */
+#hero .cta-group {
+    display: flex; /* Ustawia przyciski obok siebie */
+    gap: 15px; /* Odstęp między przyciskami */
+    margin-top: 1rem; /* Margines od tekstu */
+    flex-wrap: wrap; /* Złamie wiersz na mobilce */
+    justify-content: center;
+}
+
+/* Dostosowanie głównego przycisku CTA (wycena) */
+.cta-button {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--dark-color); /* Kontrastowy tekst */
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    transform: scale(1.05);
+}
+
+/* B. Styl dla przycisku ZADZWOŃ: Odwrócona kolorystyka dla wyróżnienia */
+
+.call-button {
+    background: var(--dark-color); /* Ciemne tło */
+    color: var(--primary-color); /* Złoty tekst */
+    border: 2px solid var(--primary-color); /* Złota ramka */
+}
+
+.call-button:hover {
+    background-color: var(--primary-color); /* Złote tło na hover */
+    color: var(--dark-color); /* Ciemny tekst */
+    transform: scale(1.05);
+}
+
+/* === Sekcja Usługi === */
+#uslugi {
+    background: var(--bg-light-gray);
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.service-card {
+    background: var(--light-color);
+    padding: 2.5rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+.service-card .icon {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+/* === Sekcja O Nas === */
+#o-nas {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+#o-nas .about-content {
+    flex: 1;
+}
+
+#o-nas .about-image {
+    flex: 1;
+}
+
+#o-nas .about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+#o-nas h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+/* === Sekcja Galeria === */
+#galeria {
+    background: var(--bg-light-gray);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.03);
+    filter: brightness(1.1); 
+}
+
+/* === Sekcja Kontakt === */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    background: var(--light-color);
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.contact-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.contact-form .submit-btn {
+    background: var(--dark-color);
+    color: var(--light-color);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form .submit-btn:hover {
+    background: var(--primary-color);
+    color: var(--dark-color);
+}
+
+.contact-info h3 {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin-bottom: 1.5rem;
+}
+
+.contact-info strong {
+    color: var(--dark-color);
+}
+
+/* === Stopka === */
+footer {
+    background: var(--dark-color);
+    color: var(--light-color);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+/* === === === === === === === ===
+   RESPONSYWNOŚĆ (Media Queries)
+=== === === === === === === === */
+
+@media (max-width: 768px) {
+    /* Rozwiązanie problemu "drgania/ruszania" strony - scrollbar zawsze włączony */
+    body {
+        overflow-y: scroll; 
+    }
+
+    h1 {
+        font-size: 2.5rem !important;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    .navbar .container {
+        align-items: center; 
+    }
+
+    /* Przycisk "Hamburger" dla mobilki - Pokaż */
+    .menu-toggle {
+        display: block; 
+    }
+
+    /* === ANIMACJA CZYSTY CSS: max-height === */
+    .navbar nav ul {
+        flex-direction: column;
+        
+        position: absolute;
+        top: 100%; 
+        left: 0;
+        width: 100%;
+        background: var(--dark-color);
+        z-index: 999;
+        overflow: hidden; 
+        display: flex;
+        
+        max-height: 0; 
+        
+        /* Czas trwania animacji dla opóźnienia zamykania */
+        transition: max-height 0.4s ease-in-out; 
+    }
+    
+    /* Stan aktywny */
+    .navbar nav ul.active {
+        max-height: 500px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
+    }
+    /* === KONIEC ANIMACJI CZYSTY CSS === */
+
+
+    .navbar nav li {
+        margin: 0;
+    }
+    
+    .navbar nav a {
+        display: block;
+        padding: 1rem;
+        /* POPRAWKA: Estetyczna, subtelna separacja na ciemnym tle */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: static;
+        color: var(--light-color); 
+    }
+    
+    /* Usuwamy animowaną linię z widoku mobilnego */
+    .navbar nav a::after {
+        content: none;
+    }
+
+
+    /* Układ kolumnowy */
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #o-nas {
+        flex-direction: column-reverse;
+    }
+    
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+    }
+    
+    #o-nas h2 {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    #hero h1 {
+        font-size: 2.1rem !important;
+    }
+    #hero p {
+        font-size: 1rem;
+    }
+    .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* === Nowoczesny Styl Szybkiego Kontaktu === */
+
+.contact-items-group {
+    margin-top: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    
+    position: relative; /* KLUCZOWE: Baza dla rozciągania linku */
+    
+    transition: background-color 0.3s ease;
+    cursor: pointer; /* Wizualna wskazówka, że można kliknąć */
+}
+
+.contact-item:hover {
+    background-color: var(--bg-light-gray);
+    /* Możesz też dodać subtelny box-shadow na hover, np. box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
+}
+.contact-item i {
+    font-size: 2rem;
+    color: var(--primary-color); /* Złoty akcent dla ikony */
+    margin-right: 15px;
+    /* Lekkie wyrównanie ikony */
+    padding-top: 5px; 
+}
+
+.contact-item h4 {
+    font-weight: 700;
+    margin-bottom: 3px;
+    color: var(--dark-color);
+    font-size: 1rem;
+}
+
+.contact-item a {
+    /* Nadpisanie niebieskiego koloru na kolor tekstu */
+    color: var(--text-color) !important; 
+    text-decoration: none !important; /* Usuń wszelkie podkreślenia */
+    font-weight: 500;
+}
+
+/* === Rozciągnięcie Linku na Cały Kontener (Pseudo-Link) === */
+.contact-item a.stretched-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1; /* Upewnia się, że link jest NA WIERZCHU */
+}
+.fa-solid {
+    font-family: "Font Awesome 6 Solid" !important;
+    font-weight: 900 !important;
+}
