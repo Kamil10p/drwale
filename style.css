@@ -43,6 +43,13 @@ section {
     padding: 4rem 0;
 }
 
+:target {
+    /* Ustawia margines przewijania dla elementu docelowego. 
+       To zostawia 75px przestrzeni nad elementem podczas skoku do kotwicy. */
+    scroll-margin-top: 70px; 
+}
+
+
 /* === Nawigacja === */
 .navbar {
     background: var(--dark-color);
